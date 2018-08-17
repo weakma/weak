@@ -15,14 +15,14 @@ abstract class AbstractEntity
 {
     public function createdAtHandle()
     {
-        if(property_exists($this, 'created_at')){
+        if(property_exists($this, 'createdAt')){
             $this->setCreatedAt(new \DateTime());
         }
     }
 
     public function updatedAtHandle()
     {
-        if(property_exists($this, 'updated_at')){
+        if(property_exists($this, 'updatedAt')){
             $this->setUpdatedAt(new \DateTime());
         }
     }

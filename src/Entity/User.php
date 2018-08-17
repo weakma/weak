@@ -211,7 +211,7 @@ class User extends AbstractEntity implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
 

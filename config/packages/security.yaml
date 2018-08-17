@@ -6,17 +6,20 @@ security:
     providers:
         api_key_user_provider:
             id: App\Security\ApiKeyUserProvider
+        form_user_provider:
+            id: App\Security\FormUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: true
+        api:
             pattern: ^/api
-            stateless: true
             simple_preauth:
                 authenticator: App\Security\ApiKeyAuthenticator
             provider: api_key_user_provider
+        main:
+            anonymous: true
+            stateless: true
             # activate different ways to authenticate
 
             # http_basic: true

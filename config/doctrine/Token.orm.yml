@@ -1,0 +1,47 @@
+App\Entity\Token:
+    type: entity
+    table: token
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 用户id
+            column: user_id
+        token:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+                comment: 令牌
+        data:
+            type: blob
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+                comment: 大对象
+        sessTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 过期时间
+            column: sess_time
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+    lifecycleCallbacks:
+      prePersist: [createdAtHandle,tokenHandle]

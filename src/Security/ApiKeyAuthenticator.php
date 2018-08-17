@@ -29,7 +29,7 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface,Authenticat
         $apiKey = $request->headers->get('Token');
 
         if (!$apiKey) {
-            //throw new BadCredentialsException('无效的凭据',401);
+            throw new BadCredentialsException('无效的凭据',401);
         }
 
         return new PreAuthenticatedToken(

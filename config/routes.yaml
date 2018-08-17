@@ -2,3 +2,7 @@ homepage:
   path: /
   methods: [GET]
   controller: App\Controller\Frontend\DefaultController::index
+login:
+    path: /authorization
+    methods: [POST]
+    controller: App\Controller\Security\SecurityController::authorization

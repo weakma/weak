@@ -25,6 +25,10 @@ class OnKernelViewSubscriber implements EventSubscriberInterface
         if(!$result instanceof View && !$result instanceof Response && 'html'==$request->getRequestFormat()){
             $request->setRequestFormat('json');
         }
+
+        if($result instanceof \stdClass){
+            $event->setControllerResult((array)$result);
+        }
     }
 
     public static function getSubscribedEvents()

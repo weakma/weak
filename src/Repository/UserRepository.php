@@ -18,6 +18,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
  */
 class UserRepository extends AbstractRepository
 {
+    const TYPE_GENERAL = 1;
 
     public function formLogin(User $user)
     {

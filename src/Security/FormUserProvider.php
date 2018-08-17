@@ -16,11 +16,12 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class FormUserProvider implements UserProviderInterface
 {
-    private $repository;
+    /** @var UserRepository */
+    private $userRegistry;
 
     public function __construct(UserRepository $repository)
     {
-        $this->repository = $repository;
+        $this->registry = $repository;
     }
 
     public function refreshUser(UserInterface $user)
@@ -37,7 +38,7 @@ class FormUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->repository->findOneBy(["username"=>$username]);
+        $user = $this->userRegistry->findOneBy(["username"=>$username]);
         if(!$user){
             throw new UsernameNotFoundException('用户名密码不匹配',400);
         }
