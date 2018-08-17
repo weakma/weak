@@ -1,0 +1,4 @@
+homepage:
+  path: /
+  methods: [GET]
+  controller: App\Controller\Frontend\DefaultController::index

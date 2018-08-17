@@ -1,0 +1,63 @@
+App\Entity\User:
+    type: entity
+    table: user
+    uniqueConstraints:
+        username:
+            columns:
+                - username
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        password:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        type:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+        avatar:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        gender:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+        roles:
+            type: simple_array
+            nullable: false
+            length: 0
+            options:
+                fixed: false
+        isActive:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: is_active
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+    lifecycleCallbacks:
+        prePersist: [createdAtHandle]

@@ -1,0 +1,16 @@
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d H:i:s" # ISO8601
+            default_timezone: "UTC" # defaults to whatever timezone set in php.ini or via date_default_timezone_set
+    property_naming:
+        separator: ~
+    metadata:
+        auto_detection: false
+        directories:
+            app:
+                namespace_prefix: "App"
+                path: "%kernel.project_dir%/config/serializer"
+#            another-name:
+#                namespace_prefix: "My\\BarBundle"
+#                path: "@MyBarBundle/Resources/config/serializer"
