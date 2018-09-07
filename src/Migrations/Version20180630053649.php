@@ -22,7 +22,7 @@ final class Version20180630053649 extends AbstractMigration
         $table->addColumn('password',Type::STRING)
             ->setLength(255)
             ->setNotnull(true);
-        $table->addColumn('type',Type::SMALLINT)->setLength(4)->setNotnull(true);
+        $table->addColumn('type',Type::SMALLINT)->setLength(4);
         $table->addColumn('avatar',Type::STRING)
             ->setLength(255)
             ->setNotnull(false);

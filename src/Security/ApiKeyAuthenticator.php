@@ -26,7 +26,7 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface,Authenticat
     public function createToken(Request $request, $providerKey)
     {
         // look for an apikey query parameter
-        $apiKey = $request->headers->get('Token');
+        $apiKey = $request->headers->get('X-AUTH-TOKEN');
 
         if (!$apiKey) {
             throw new BadCredentialsException('无效的凭据',401);

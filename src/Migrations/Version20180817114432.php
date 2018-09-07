@@ -15,7 +15,7 @@ final class Version20180817114432 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE token (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL COMMENT \'用户id\', token VARCHAR(128) NOT NULL COMMENT \'令牌\', data BLOB NOT NULL COMMENT \'大对象\', sess_time INT NOT NULL COMMENT \'过期时间\', created_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE token (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(255) NOT NULL COMMENT \'用户id\', token CHAR(32) NOT NULL COMMENT \'令牌\', expired_at DATETIME NOT NULL COMMENT \'过期时间\', created_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;');
     }
 
     public function down(Schema $schema) : void

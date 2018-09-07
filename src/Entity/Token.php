@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * Token
  */
@@ -13,9 +15,9 @@ class Token extends AbstractEntity
     private $id;
 
     /**
-     * @var int
+     * @var string
      */
-    private $userId;
+    private $username;
 
     /**
      * @var string
@@ -23,14 +25,9 @@ class Token extends AbstractEntity
     private $token;
 
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $data;
-
-    /**
-     * @var int
-     */
-    private $sessTime = 2592000;
+    private $expiredAt;
 
     /**
      * @var \DateTime
@@ -49,27 +46,27 @@ class Token extends AbstractEntity
     }
 
     /**
-     * Set userId.
+     * Set username.
      *
      * @param int $userId
      *
      * @return Token
      */
-    public function setUserId($userId)
+    public function setUsername($username)
     {
-        $this->userId = $userId;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get userId.
+     * Get username.
      *
      * @return int
      */
-    public function getUserId()
+    public function getUsername()
     {
-        return $this->userId;
+        return $this->username;
     }
 
     /**
@@ -97,51 +94,27 @@ class Token extends AbstractEntity
     }
 
     /**
-     * Set data.
+     * Set expiredAt.
      *
-     * @param string $data
+     * @param \DateTime $expiredAt
      *
      * @return Token
      */
-    public function setData($data)
+    public function setExpiredAt($expiredAt)
     {
-        $this->data = $data;
+        $this->expiredAt = $expiredAt;
 
         return $this;
     }
 
     /**
-     * Get data.
+     * Get expiredAt.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getData()
+    public function getExpiredAt()
     {
-        return $this->data;
-    }
-
-    /**
-     * Set sessTime.
-     *
-     * @param int $sessTime
-     *
-     * @return Token
-     */
-    public function setSessTime($sessTime)
-    {
-        $this->sessTime = $sessTime;
-
-        return $this;
-    }
-
-    /**
-     * Get sessTime.
-     *
-     * @return int
-     */
-    public function getSessTime()
-    {
-        return $this->sessTime;
+        return $this->expiredAt;
     }
 
     /**
@@ -170,21 +143,12 @@ class Token extends AbstractEntity
 
     public function tokenHandle()
     {
-        if (@file_exists('/dev/urandom')) { // Get 100 bytes of random data
-            $randomData = file_get_contents('/dev/urandom', false, null, 0, 100);
-        } elseif (function_exists('openssl_random_pseudo_bytes')) { // Get 100 bytes of pseudo-random data
-            $bytes = openssl_random_pseudo_bytes(100, $strong);
-            if (true === $strong && false !== $bytes) {
-                $randomData = $bytes;
-            }
-        }
-        // Last resort: mt_rand
-        if (empty($randomData)) { // Get 108 bytes of (pseudo-random, insecure) data
-            $randomData = mt_rand() . mt_rand() . mt_rand() . uniqid(mt_rand(), true) . microtime(true) . uniqid(
-                    mt_rand(),
-                    true
-                );
-        }
-        return rtrim(strtr(base64_encode(hash('sha256', $randomData)), '+/', '-_'), '=');
+        $this->token = Uuid::uuid5(Uuid::NAMESPACE_OID,'api.token')->getHex();
+    }
+
+    public function expiredAtHandle()
+    {
+        $date = new \DateTime();
+        $this->expiredAt = $date->modify('+30 days');
     }
 }

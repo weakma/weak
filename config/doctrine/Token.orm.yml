@@ -1,6 +1,9 @@
 App\Entity\Token:
     type: entity
     table: token
+    indexes:
+        token_index:
+            columns: ['token']
     id:
         id:
             type: integer
@@ -11,37 +14,30 @@ App\Entity\Token:
             generator:
                 strategy: IDENTITY
     fields:
-        userId:
-            type: integer
+        username:
+            type: string
             nullable: false
             options:
                 unsigned: false
                 comment: 用户id
-            column: user_id
+            column: username
         token:
             type: string
             nullable: false
-            length: 128
+            length: 32
             options:
                 fixed: false
                 comment: 令牌
-        data:
-            type: blob
-            nullable: false
-            length: 65535
-            options:
-                fixed: false
-                comment: 大对象
-        sessTime:
-            type: integer
+        expiredAt:
+            type: datetime
             nullable: false
             options:
                 unsigned: false
                 comment: 过期时间
-            column: sess_time
+            column: expired_at
         createdAt:
             type: datetime
             nullable: false
             column: created_at
     lifecycleCallbacks:
-      prePersist: [createdAtHandle,tokenHandle]
+      prePersist: [createdAtHandle,tokenHandle,expiredAtHandle]
