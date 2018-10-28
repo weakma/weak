@@ -8,29 +8,65 @@
 
 namespace App\Controller\Security;
 
+use App\Business\User\BusinessUser;
+use App\Business\User\UserPeer;
 use App\Controller\AbstractController;
-use App\Entity\Token;
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Exception\EntityException;
+use App\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends AbstractController
 {
-    public function authorization(Request $request,UserRepository $registry)
+    private $userPeer;
+
+    public function __construct(UserPeer $userPeer)
     {
-        /** @var User $user */
-        $user = $registry->findOneBy(['username'=>$request->request->get('username')]);
+        $this->userPeer = $userPeer;
+    }
 
+    /**
+     * 登入
+     *
+     * @param Request $request
+     * @return array|bool|\FOS\RestBundle\View\View
+     */
+    public function postAuthenticateAction(Request $request)
+    {
+        try{
 
-        $res = $this->get('security.password_encoder')->isPasswordValid($user,$request->request->get('password'));
+            $businessUser = $this->userPeer->findOneBy(['username'=>$request->request->get('username')]);
 
-        if($res){
-            $token = new Token();
-            $token->setUsername($user->getUsername());
-            $registry->save($token);
-            return ['success'=>$res,'message'=>'认证成功','token'=>$token->getToken()];
+            if($businessUser instanceof BusinessUser && $token = $businessUser->authenticate($request->request->get('password'))) {
+
+                return $token;
+            }
+            return $this->validateError(['password'=>'用户名密码不匹配']);
+        }catch (EntityException $e){
+            return $this->error(['message'=>'服务器出错了','success'=>false],500);
         }
 
-        return $this->error(['message'=>'用户名密码不匹配','success'=>$res]);
+    }
+
+    /**
+     * 注册
+     *
+     * @param Request $request
+     *
+     * @return array|bool|\FOS\RestBundle\View\View
+     */
+    public function postEnrolAction(Request $request)
+    {
+        try{
+            $businessUser = $this->userPeer->register($request->request->all());
+
+            return $businessUser->authenticate($businessUser->getUser()->getPlainPassword());
+
+        }catch (ValidationException $e){
+            return $this->errorValidate($e);
+        }catch (EntityException $e){
+            return $this->error('服务器出错了',500);
+        }
+
+
     }
 }

@@ -1,0 +1,5 @@
+mrechant:
+    type: rest
+    name_prefix: 'merchant.'
+    #prefix: 'merchant'
+    resource: 'App\Controller\Api\Backend\MerchantController'

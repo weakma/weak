@@ -2,7 +2,10 @@ homepage:
   path: /
   methods: [GET]
   controller: App\Controller\Frontend\DefaultController::index
-login:
-    path: /authorization
-    methods: [POST]
-    controller: App\Controller\Security\SecurityController::authorization
+
+api:
+    prefix: '_api'
+    type: 'rest'
+    host: 'weak'
+    name_prefix: 'api.'
+    resource: 'routes/api.yaml'

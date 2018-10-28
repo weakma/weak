@@ -1,0 +1,23 @@
+App\Entity\Merchant:
+    properties:
+        name:
+            - NotNull:
+                message: '无效的商户名称'
+            - NotBlank:
+                message: '无效的商户名称'
+App\Entity\User:
+    properties:
+        name:
+            - NotNull:
+                message: '无效的商户名称'
+                groups: [registration,uppassword]
+            - NotBlank: { groups: [registration] }
+                groups: [registration,uppassword]
+                message: '无效的商户名称'
+        plainPassword:
+            - NotNull:
+                groups: [registration,uppassword]
+                message: '无效的商户名称'
+            - NotBlank:
+                message: '无效的商户名称'
+                groups: [registration,uppassword]

@@ -1,0 +1,121 @@
+App\Entity\Merchant:
+    type: entity
+    table: merchant
+    indexes:
+        merchant_name:
+            columns:
+                - name
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 64
+            options:
+                fixed: false
+                comment: 商户名称
+        openingTime:
+            type: time
+            nullable: true
+            options:
+                comment: 营业开始时间
+            column: opening_time
+        closedTime:
+            type: time
+            nullable: true
+            options:
+                comment: 营业结束时间
+            column: closed_time
+        week:
+            type: json
+            nullable: true
+            options:
+                comment: 营业周
+        tel:
+            type: string
+            nullable: true
+            length: 12
+            options:
+                fixed: false
+                comment: 商家电话
+        brand:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+                comment: 品牌
+        shopLogo:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+                comment: 商标
+            column: shop_logo
+        province:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                comment: 省
+        city:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                comment: 市
+        district:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+                comment: 区县
+        street:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+                comment: 街道地址
+        longitude:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 经度
+        latitude:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                comment: 纬度
+        version:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                comment: 版本
+        expireDate:
+            type: date
+            nullable: false
+            options:
+                comment: 到期日期
+            column: expire_date
+        createdAt:
+            type: datetime
+            nullable: false
+            options:
+                comment: 创建时间
+            column: created_at
+    lifecycleCallbacks: {  }

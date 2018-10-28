@@ -15,11 +15,16 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
+/**
+ * Class AbstractRepository
+ *
+ * @package App\Repository
+ *
+ *
+ */
 abstract class AbstractRepository extends ServiceEntityRepository
 {
     protected $container;
-    //protected $paginator;
 
     public function __construct(ContainerInterface $container)
     {
@@ -56,7 +61,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
         /** @var AbstractEntity $entity */
         $entityClass = static::getEntityClass();
         $entity = new $entityClass();
-        $entity->mapping($properties,$options);
+        self::mapping($entity,$properties,$options);
 
         return $entity;
 
@@ -66,7 +71,6 @@ abstract class AbstractRepository extends ServiceEntityRepository
      * @param $entity
      * @return bool
      * @throws EntityException
-     * @throws \Exception
      */
     public function save($entity)
     {
@@ -93,7 +97,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
             throw new EntityException($e->getMessage(),$e->getCode());
         }catch (\Exception $e){
             $this->getEntityManager()->rollback();
-            throw $e;
+            throw new EntityException($e->getMessage(),$e->getCode());
         }
     }
 
@@ -106,4 +110,42 @@ abstract class AbstractRepository extends ServiceEntityRepository
         return str_replace(['\\Repository','Repository'],['\\Entity',''],static::class);
     }
 
+    /**
+     * @param AbstractEntity|array $entity
+     * @param array $data
+     * @param array $options
+     * exp:
+     * $this->mapping($entity, $postData, ['filter'=['排除的'],'only'=['仅需要的属性']])
+     *
+     */
+    public function mapping($entity,array $data, array $options = [])
+    {
+        array_walk($data, function ($val, $key) use ($options,$entity) {
+            if ((key_exists('only', $options) && !in_array($key, $options['only'])) || (key_exists('filter', $options) && in_array($key, $options['filter']))) {
+                return;
+            }
+            $method = 'set' . self::underline2camel($key);
+            if (method_exists($entity, $method)) {
+                $entity->{$method}($val);
+            }
+
+        });
+
+        return $this;
+    }
+
+    /**
+     * 下划线转驼峰
+     * @param $haystack
+     * @return string
+     */
+    public static function underline2camel($haystack)
+    {
+        $haystackArray = explode('_', $haystack);
+        $dist = '';
+        array_walk($haystackArray, function ($val, $key) use (&$dist) {
+            $dist .= $key ? ucfirst($val) : $val;
+        });
+        return $dist;
+    }
 }

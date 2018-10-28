@@ -7,6 +7,32 @@ parameters:
     locale: 'en'
     fos_rest.throw_exception_on_unsupported_content_type: false
     fos_rest.body_default_format: json
+    qiniu:
+        access_key: '%env(QINIU_ACCESS_KEY)%'
+        secret_key: '%env(QINIU_SECRET_KEY)%'
+        bucket:
+            video:
+                domain: 'video.weak'
+                policy:
+                    persistentOps: "vframe/jpg/offset/1"
+                    persistentNotifyUrl: '%env(API_URL)%/_api/common/qiniu/callback/fops'
+                    persistentPipeline: "worker_video_pipe"
+                    mimeLimit: "video/*;audio/*"
+        default:
+            policy:
+                insertOnly: 1
+                isPrefixalScope: 1
+                detectMime: 1
+                returnBody: '{"bucket":"$(bucket)","key":"$(key)","hash":"$(etag)","size":$(fsize),"origin_file_name":$(fname)}'
+                saveKey: '$(year)$(mon)$(day)/$(etag)'
+                fsizeMin: 1024 # 1KB
+                fsizeLimit: 1024 * 1024 * 1024 # 100MB
+                #callbackUrl: '/_api/common/qiniu/callbacks'
+                #callbackHost: '%env(API_URL)%'
+            image:
+                domain: 'http://image.weak'
+                policy:
+                    mimeLimit: "image/*"
 
 services:
     # default configuration for services in *this* file
@@ -40,4 +66,7 @@ services:
 #        class: 'Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator'
 #        arguments:
 #            $locator: '@file_locator'
+    App\Services\QiniuService:
+        arguments:
+            $config: '%qiniu%'
 

@@ -1,0 +1,10 @@
+qiniu:
+    type: rest
+    name_prefix: 'qiniu.'
+    prefix: 'qiniu'
+    resource: 'App\Controller\Api\Common\QiniuController'
+sms:
+    type: rest
+    name_prefix: 'sms.'
+    prefix: 'sms'
+    resource: 'App\Controller\Api\Common\SmsController'

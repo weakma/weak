@@ -1,0 +1,3 @@
+security:
+    type: rest
+    resource: 'App\Controller\Security\SecurityController'

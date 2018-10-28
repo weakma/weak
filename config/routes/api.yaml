@@ -1,0 +1,25 @@
+backend:
+    prefix: 'backend'
+    type: 'rest'
+    name_prefix: 'backend.'
+    resource: 'api/backend.yaml'
+frontend:
+    prefix: 'frontend'
+    type: 'rest'
+    name_prefix: 'frontend.'
+    resource: 'api/frontend.yaml'
+common:
+    prefix: 'common'
+    type: 'rest'
+    name_prefix: 'common.'
+    resource: 'api/common.yaml'
+merchant:
+    prefix: 'merchant'
+    type: 'rest'
+    name_prefix: 'merchant.'
+    resource: 'api/merchant.yaml'
+security:
+    prefix: 'security'
+    type: 'rest'
+    name_prefix: 'security.'
+    resource: 'api/security.yaml'

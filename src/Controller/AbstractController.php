@@ -28,7 +28,7 @@ abstract class AbstractController extends FOSRestController
             }
 
         }
-        return $this->view(['message'=>'数据验证错误','validate' => $data], 400);
+        return $this->validateError($data);
     }
 
     /**
@@ -38,6 +38,16 @@ abstract class AbstractController extends FOSRestController
      */
     protected function error($data = null, $code = 400)
     {
+        if(is_array($data)&&!key_exists('success',$data)) $data['success'] = false;
         return $this->view($data, $code);
+    }
+
+    /**
+     * @param array $data
+     * @return \FOS\RestBundle\View\View
+     */
+    protected function validateError(array $data)
+    {
+        return $this->error(['message'=>'数据验证错误','validate' => $data]);
     }
 }

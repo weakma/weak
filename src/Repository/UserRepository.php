@@ -15,6 +15,10 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 /**
  * Class UserRepository
  * @package App\Repository
+ *
+ * @method User findOneBy(array $criteria, array $orderBy = null)
+ *
+ * @inheritdoc
  */
 class UserRepository extends AbstractRepository
 {
@@ -30,8 +34,5 @@ class UserRepository extends AbstractRepository
 
     }
 
-    public function apiKeyLogin(User $user)
-    {
-        
-    }
+
 }

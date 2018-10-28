@@ -20,7 +20,7 @@ class User extends AbstractEntity implements UserInterface, \Serializable
     /**
      * @var string
      */
-    //private $email;
+    private $plainPassword;
 
     /**
      * @var string
@@ -309,6 +309,24 @@ class User extends AbstractEntity implements UserInterface, \Serializable
             $this->roles,
             $this->isActive,
             $this->createdAt) = unserialize($serialized);
+    }
+
+    /**
+     * @param $plainPassword
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
     }
 
     /**
