@@ -1,4 +1,4 @@
-homepage:
+home:
   path: /
   methods: [GET]
   controller: App\Controller\Frontend\DefaultController::index
@@ -9,3 +9,12 @@ api:
     host: 'weak'
     name_prefix: 'api.'
     resource: 'routes/api.yaml'
+security:
+    prefix: 'security'
+    name_prefix: 'security.'
+    resource: 'routes/security.yaml'
+callback:
+    prefix: 'callback'
+    type: 'rest'
+    name_prefix: 'callback.'
+    resource: 'routes/callbacks.yaml'

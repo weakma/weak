@@ -1,0 +1,5 @@
+qiniu:
+    type: rest
+    name_prefix: 'qiniu.'
+    prefix: 'qiniu'
+    resource: 'App\Controller\Callbacks\QiniuController'

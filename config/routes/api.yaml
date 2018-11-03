@@ -18,8 +18,3 @@ merchant:
     type: 'rest'
     name_prefix: 'merchant.'
     resource: 'api/merchant.yaml'
-security:
-    prefix: 'security'
-    type: 'rest'
-    name_prefix: 'security.'
-    resource: 'api/security.yaml'
