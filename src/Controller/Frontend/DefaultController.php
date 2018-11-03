@@ -11,9 +11,6 @@ class DefaultController extends AbstractController
     public function index()
     {
 
-
-        return $this->render('frontend/index.html.twig', [
-            'controller_name' => 'FrontendDefaultController',
-        ]);
+        return $this->render('frontend/index.html.twig');
     }
 }
