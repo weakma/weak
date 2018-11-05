@@ -1,3 +1,4 @@
-security:
-    type: rest
-    resource: 'App\Controller\Security\SecurityController'
+signin:
+    path: '/signin'
+    methods: [GET]
+    controller: 'App\Controller\Security\SecurityController:signin'

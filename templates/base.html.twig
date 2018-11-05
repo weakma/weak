@@ -6,10 +6,15 @@
         <meta name="description" content="">
         <meta name="author" content="fast fish">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('/dist/app.css') }}">
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('/dist/manifest.js') }}"></script>
+            <script src="{{ asset('/dist/app.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

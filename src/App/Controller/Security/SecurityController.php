@@ -24,6 +24,11 @@ class SecurityController extends AbstractController
         $this->userPeer = $userPeer;
     }
 
+    public function signin()
+    {
+        return $this->render('security/signin.twig');
+    }
+
     /**
      * 登入
      *

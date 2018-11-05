@@ -1,4 +1,4 @@
-home:
+app.home:
   path: /
   methods: [GET]
   controller: App\Controller\Frontend\DefaultController::index
@@ -10,8 +10,7 @@ api:
     name_prefix: 'api.'
     resource: 'routes/api.yaml'
 security:
-    prefix: 'security'
-    name_prefix: 'security.'
+    name_prefix: 'app.'
     resource: 'routes/security.yaml'
 callback:
     prefix: 'callback'
